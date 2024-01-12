@@ -1,0 +1,46 @@
+//1704. Determine if String Halves Are Alike
+//Approach we basically just made a function to check if the char is vowel or not and used the 2 pointer to iterate at same time si++ and e-- and atlast just checked the left and right count of var
+class Solution {
+    public boolean isVowel(char c){
+        if(c=='a'||c=='e'||c=='i'||c=='o'||c=='u'||c=='A'||c=='E'||c=='I'||c=='O'||c=='U'){
+            return true;
+        }
+        return false;
+    }
+    public boolean halvesAreAlike(String s) {
+        int si = 0;
+        int e = s.length()-1;
+        int left = 0;int right = 0;
+        while(si<e){
+            if(isVowel(s.charAt(si))){
+                left++;
+            }
+            if(isVowel(s.charAt(e))){
+                right++;
+            }
+            si++;e--;
+        }
+        return (left==right);
+    }
+}
+
+//using substring and indexOf methods
+class Solution {
+    public boolean halvesAreAlike(String s) {
+        int mid = s.length() / 2;
+        String firstHalf = s.substring(0, mid);
+        String secondHalf = s.substring(mid);        
+        int countFirst = countVowels(firstHalf);
+        int countSecond = countVowels(secondHalf);        
+        return countFirst == countSecond;
+    }    
+    private int countVowels(String str) {
+        int count = 0;
+        for (char ch : str.toCharArray()) {
+            if ("AEIOUaeiou".indexOf(ch) != -1) {
+                count++;
+            }
+        }
+        return count;
+    }
+}
