@@ -1,0 +1,39 @@
+// approach 1 using hashmap
+class Solution {
+    public int minSteps(String s, String t) {
+        HashMap<Character,Integer> map = new HashMap();
+        for(int i = 0;i<s.length();i++){
+            map.put(s.charAt(i),map.getOrDefault(s.charAt(i),0)+1);
+        }
+        for(int i = 0;i<t.length();i++){
+            if(map.containsKey(t.charAt(i))){
+                int c = map.get(t.charAt(i));
+                map.put(t.charAt(i),c-1);
+            }
+        }
+        int ans = 0;
+        for(char c: map.keySet()){
+            if(map.get(c)<0){
+                continue;
+            }
+            ans+=map.get(c);
+        }
+        return ans;
+    }
+}
+
+//2nd using count array till 26 to use the count and keep the check
+class Solution {
+    public int minSteps(String s, String t) {
+        int[] count = new int[26];
+        for(int i = 0;i<s.length();i++){
+            count[t.charAt(i)-'a']--;
+            count[s.charAt(i)-'a']++;
+        }
+        int ans = 0;
+        for(int i = 0;i<26;i++){
+            ans+=Math.max(0,count[i]);
+        }
+        return ans;
+    }
+}
