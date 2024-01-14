@@ -1,0 +1,72 @@
+// using hashmaps 
+class Solution {
+    public boolean closeStrings(String word1, String word2) {
+        if(word1.length() != word2.length())return false;
+        HashMap<Character,Integer> map1 = new HashMap();
+        HashMap<Character,Integer> map2 = new HashMap();
+        for(int i = 0;i<word1.length();i++){
+            map1.put(word1.charAt(i),map1.getOrDefault(word1.charAt(i),0)+1);
+            map2.put(word2.charAt(i),map2.getOrDefault(word2.charAt(i),0)+1);
+        }
+        if(map1.size()!=map2.size()){
+            return false;
+        }
+        HashMap<Integer,Integer> m = new HashMap<>();
+        for(char s : map1.keySet()){
+            if(!map2.containsKey(s)){
+                return false;
+            }
+            m.put(map1.get(s),m.getOrDefault(map1.get(s),0)+1);
+        }
+        for(char s: map2.keySet()){
+            int curr = map2.get(s);
+            if(!m.containsKey(curr)){
+                return false;
+            }
+            m.put(curr,m.get(curr)-1);
+            if(m.get(curr)<0){
+                return false;
+            }
+        }
+        for(int i:m.keySet()){
+            if(m.get(i)>0){
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+//use of frequency array
+
+class Solution {
+    public boolean closeStrings(String word1, String word2) {
+        int[] freq1 = new int[26];
+        int[] freq2 = new int[26];
+
+        for (char ch : word1.toCharArray()) {
+            freq1[ch - 'a']++;
+        }
+
+        for (char ch : word2.toCharArray()) {
+            freq2[ch - 'a']++;
+        }
+
+        for (int i = 0; i < 26; i++) {
+            if ((freq1[i] == 0 && freq2[i] != 0) || (freq1[i] != 0 && freq2[i] == 0)) {
+                return false;
+            }
+        }
+
+        Arrays.sort(freq1);
+        Arrays.sort(freq2);
+
+        for (int i = 0; i < 26; i++) {
+            if (freq1[i] != freq2[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
