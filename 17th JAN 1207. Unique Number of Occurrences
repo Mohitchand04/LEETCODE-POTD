@@ -1,0 +1,40 @@
+//1st approach - with the help of hashmap and set 
+class Solution {
+    public boolean uniqueOccurrences(int[] arr) {
+        HashMap<Integer,Integer> map = new HashMap();
+        for(int i = 0;i<arr.length;i++){
+            map.put(arr[i],map.getOrDefault(arr[i],0)+1);
+        }
+        Set<Integer> set = new HashSet<>();
+        for(int i:map.keySet()){
+            if(set.contains(map.get(i))){
+                return false;
+            }
+            set.add(map.get(i));
+        }
+        return true;
+    }
+}
+
+
+//2nd with 2 arrays of 2001 both check the occurrences
+class Solution {
+    public boolean uniqueOccurrences(int[] arr) {
+        int map[] = new int[2001];
+        int occ[] = new int[2001];
+        for(int i : arr){
+            occ[i+1000]++;
+        }
+        for(int i:arr){
+            int val = occ[i+1000];
+            occ[i+1000]=0;
+            if(val>0){
+                if(map[val]!=0){
+                    return false;
+                }
+                map[val]++;
+            }
+        }
+        return true;
+    }
+}
