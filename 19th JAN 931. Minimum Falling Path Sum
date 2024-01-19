@@ -1,0 +1,33 @@
+//using memozitation or TOP-Down approach
+class Solution {
+    int dp[][] ;
+    public int minFallingPathSum(int[][] matrix) {
+        int n = matrix.length;
+        dp = new int[101][101];
+        //initialize dp with -10001 because that will be the min sum if ever comes
+        for(int i[] : dp){
+            Arrays.fill(i,-10001);
+        }
+        int ans = Integer.MAX_VALUE;
+        for(int i = 0;i<n;i++){
+            ans = Math.min(ans,helper(0,i,matrix));
+        }
+        return ans;
+    }
+    public int helper(int x,int y,int[][] matrix){
+        if(x == matrix.length){
+            return 0;
+        }
+        if(dp[x][y]!=-10001){
+            return dp[x][y];
+        }
+        int ans =matrix[x][y]+helper(x+1,y,matrix);
+        if(y-1>=0){
+            ans= Math.min(ans,matrix[x][y]+helper(x+1,y-1,matrix));
+        }
+        if(y+1<matrix.length){
+            ans=Math.min(ans,matrix[x][y]+helper(x+1,y+1,matrix));
+        }
+        return dp[x][y]=ans;
+    }
+}
