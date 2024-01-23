@@ -1,0 +1,32 @@
+class Solution {
+    public int maxLength(List<String> arr) {
+        int max[] = new int[1];
+        func(arr,"",max,0);
+        return max[0];
+    }
+    public void func(List<String> arr,String curr,int[] max,int si){
+        if(max[0]<curr.length()){
+            max[0] = curr.length();
+        }
+
+        for(int i = si;i<arr.size();i++){
+            if(!isValid(curr,arr.get(i))){
+                continue;
+            }
+            func(arr,curr+arr.get(i),max,i+1); // here i + 1 not si+1
+        }
+    }
+    public boolean isValid(String curr, String newStr){
+        Set<Character> set = new HashSet<>();
+        for(char ch : newStr.toCharArray()){
+            if(set.contains(ch)){
+                return false;
+            }
+            set.add(ch);
+            if(curr.contains(String.valueOf(ch))){
+                return false;
+            }
+        }
+        return true;
+    }
+}
