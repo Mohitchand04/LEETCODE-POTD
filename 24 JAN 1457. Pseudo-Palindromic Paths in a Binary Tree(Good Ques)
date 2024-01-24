@@ -1,0 +1,79 @@
+//using set  High TC and Space Complexity
+class Solution {
+    int ans = 0;
+    public int pseudoPalindromicPaths (TreeNode root) {
+        Set<Integer> set = new HashSet<>();
+        func(root,set);
+        return ans;
+    }
+    public void func(TreeNode node,Set<Integer> set){
+        if(node == null){
+            return;
+        }
+        if(set.contains(node.val)){
+            set.remove(node.val);
+        }else{
+            set.add(node.val);
+        }
+        if(node.left==null && node.right==null){
+            if(set.size()<=1){
+                ans++;
+            }
+        }
+        func(node.left,new HashSet<>(set));
+        func(node.right,new HashSet<>(set));
+    }
+}
+// using set but has low TC and Space Complexity
+class Solution {
+    int ans = 0;
+    public int pseudoPalindromicPaths (TreeNode root) {
+        Set<Integer> set = new HashSet<>();
+        func(root,set);
+        return ans;
+    }
+    public void func(TreeNode node,Set<Integer> set){
+        if(node == null){
+            return;
+        }
+        if(set.contains(node.val)){
+            set.remove(node.val);
+        }else{
+            set.add(node.val);
+        }
+        if(node.left==null && node.right==null){
+            if(set.size()<=1){
+                ans++;
+            }
+        }
+        func(node.left,set);
+        func(node.right,set);
+        if(set.contains(node.val)){
+            set.remove(node.val);
+        }else{
+            set.add(node.val);
+        }
+    }
+}
+// using BITWISE operation
+class Solution {
+    int ans = 0;
+    public int pseudoPalindromicPaths (TreeNode root) {
+        // Set<Integer> set = new HashSet<>();
+        func(root,0);
+        return ans;
+    }
+    public void func(TreeNode node,int count){
+        if(node == null){
+            return;
+        }
+        count = count^(1<<node.val);
+        if(node.left==null && node.right==null){
+            if((count & (count-1))==0){
+                ans++;
+            }
+        }
+        func(node.left,count);
+        func(node.right,count);
+    }
+}
