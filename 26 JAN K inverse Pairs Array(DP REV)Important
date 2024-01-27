@@ -1,0 +1,37 @@
+// solving recursively // so the logic is i'm going to keep a int stable and check how many reverse pairs can be there // bdi problem sei choti problem ko solve krtei hue laa rhei hei
+public class solution{
+    int dp[][] = new int[1001][1001];
+    public int kInversePair(int n,int k){
+        //base case 
+        if(k<0) return 0;
+        if(k==0) return 1;
+        if(dp[n][k] == 0){
+            for(int i = 0;i<n;i++){
+                dp[n][k] = (dp[n][k] + kInverse(n-1,k-i)%1000000007;
+            }
+        }
+        return dp[n][k];
+    }
+}
+//the above will give a TLE because of recursion
+
+// we will use dp but the following will also be of a lot of TC
+class Solution {
+    int mod = 1000000007;    
+    public int kInversePairs(int n, int k) {
+        int[][] dp = new int[1001][1001];
+        dp[0][0]=1;
+        for(int N = 1;N<=n;N++){
+            for(int K =0;K<=k;K++){
+                for(int i = 0;i<=Math.min(K,N-1);i++){ //x will go until the j which is the pairs 
+                    if(K-i>=0){
+                        dp[N][K] = (dp[N][K]+dp[N-1][K-i])%mod;
+                    }
+                }
+            }
+        }
+        return dp[n][k];
+    }
+}  
+
+// We can use a dp with only 2 for loops also
