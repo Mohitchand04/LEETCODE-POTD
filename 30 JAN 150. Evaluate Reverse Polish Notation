@@ -1,0 +1,39 @@
+// iterative with funcitons
+class Solution {
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> s = new Stack();
+        s.push(Integer.parseInt(tokens[0]));
+        for(int i = 1;i<tokens.length;i++){
+            while(!isOp(tokens[i]) && !s.isEmpty()){
+                s.push(Integer.parseInt(tokens[i]));
+                i++;
+            }
+            int op2 =s.pop();
+            int op1 = s.pop();
+            int curr = cal(op1,op2,tokens[i]);
+            s.push(curr);
+        }
+        return s.pop();
+    }
+    public boolean isOp(String s){
+        if(s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/") ){
+            return true;
+        }
+        return false;
+    }
+    public int cal(int op1, int op2, String op){
+        switch(op){
+            case "+":
+            return op1+op2;
+            case "-":
+            return op1-op2;
+            case "/":
+            return op1/op2;
+            case "*":
+            return op1*op2;
+        }
+        return 0;
+    }
+}
+
+// Recursive appraoch
