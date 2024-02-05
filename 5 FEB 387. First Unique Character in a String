@@ -1,0 +1,33 @@
+// using hashmap as for counting
+class Solution {
+    public int firstUniqChar(String s) {
+        // HashMap<Character,Integer> map = new HashMap(); // instead of hashmap we can take arr[26]
+        int map[] = new int[27];
+        for(char ch : s.toCharArray()){
+            // map.put(ch,map.getOrDefault(ch,0)+1);
+            char curr = ch;
+            map[ch-'a']++;
+        }
+        for(int i = 0;i<s.length();i++){
+            if(map[s.charAt(i)-'a'] == 1){
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+
+// using indexOf and lastIndexOf
+class Solution {
+    public int firstUniqChar(String s) {
+        int ans = Integer.MAX_VALUE;
+        for(char ch='a'; ch<='z' ; ch++){
+            int si = s.indexOf(ch);
+            int ei = s.lastIndexOf(ch);
+            if(si == ei && (si != -1 || ei != -1)){
+                ans = Math.min(ans,si);
+            }
+        }
+        return ans==Integer.MAX_VALUE?-1:ans;
+    }
+}
