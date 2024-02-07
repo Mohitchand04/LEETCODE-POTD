@@ -1,0 +1,50 @@
+// hashmap counting and then use BUCKET SORT
+class Solution {
+    public String frequencySort(String s) {
+        HashMap<Character,Integer> map = new HashMap();
+        for(char ch: s.toCharArray()){
+            map.put(ch,map.getOrDefault(ch,0)+1);
+        }
+        List<Character>[] bucket = new ArrayList[s.length()+1];
+        for(char ch : map.keySet()){
+            if(bucket[map.get(ch)]==null){
+                bucket[map.get(ch)]=new ArrayList();
+            }
+            bucket[map.get(ch)].add(ch);
+        }
+        StringBuilder sb = new StringBuilder();
+        for(int i = s.length();i>=0;i--){
+            if(bucket[i]!=null){
+                for(char c:bucket[i]){
+                    for(int j = 0;j<i;j++){
+                        sb.append(c);
+                    }
+                }
+            }
+        }
+        return sb.toString();
+    }
+}
+
+/// Taking a 2D array of size 123 for all ascii values and then storing indexes with the count and then making new string
+class Solution {
+  public String frequencySort(String s) {
+    var map = new int[125][2];
+
+    for (var i=0; i<125; i++)
+      map[i][0] = i;
+
+    for (var c : s.toCharArray())
+      map[c][1]++;
+
+    Arrays.sort(map, (a, b) -> Integer.compare(b[1], a[1]));
+
+    var sb = new StringBuilder();
+
+    for (var i=0; i<125; i++)
+      while (map[i][1]-- > 0)
+        sb.append((char) map[i][0]);
+
+    return sb.toString();
+  }
+}
