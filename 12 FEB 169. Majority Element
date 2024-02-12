@@ -1,0 +1,20 @@
+// Moore's Voting Algorithm
+class Solution {
+    public int majorityElement(int[] nums) {
+        int currEle = 0;
+        int count = 0;
+        for(int i = 0;i<nums.length;i++){
+            if(count == 0){
+                currEle = nums[i];
+            }
+            if(nums[i]==currEle){
+                count++;
+            }else{
+                count--;
+            }
+        }
+        return currEle;
+    }
+}
+// can be done with hashmap counting 
+// can be done by sorting and returning the n/2 element
